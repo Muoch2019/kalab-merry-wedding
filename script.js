@@ -1,4 +1,3 @@
-
 // ===================================
 // KALAB & MERRY WEDDING WEBSITE
 // CHANGE THESE DETAILS FOR THE EVENT
@@ -12,40 +11,56 @@ const wedding = {
     mapQuery: "Addis Ababa, Ethiopia"
 };
 
-// OPEN INVITATION
-
-function openInvitation() {
-    document.getElementById("opening").classList.add("hide");
-
-    music.play()
-        .then(() => {
-            musicButton.textContent = "Ⅱ";
-            musicLabel.textContent = "Now playing";
-        })
-        .catch((error) => {
-            musicLabel.textContent = "Tap to play our song";
-            console.log("Music playback:", error);
-        });
-}
-
-// MUSIC PLAYER
+// ===================================
+// MUSIC ELEMENTS
+// ===================================
 
 const music = document.getElementById("weddingMusic");
 const musicButton = document.getElementById("musicButton");
 const musicLabel = document.getElementById("musicLabel");
 const volumeButton = document.getElementById("volumeButton");
 
+// ===================================
+// OPEN INVITATION
+// ===================================
+
+function openInvitation() {
+    document.getElementById("opening").classList.add("hide");
+
+    // Try to start music directly from the button click.
+    music.play()
+        .then(() => {
+            musicButton.textContent = "Ⅱ";
+            musicLabel.textContent = "Now playing";
+        })
+        .catch((error) => {
+            musicButton.textContent = "▶";
+            musicLabel.textContent = "Tap to play our song";
+
+            console.log("Music could not start automatically:", error);
+        });
+}
+
+// ===================================
+// MUSIC PLAYER
+// ===================================
+
 musicButton.addEventListener("click", async () => {
     if (music.paused) {
         try {
             await music.play();
+
             musicButton.textContent = "Ⅱ";
             musicLabel.textContent = "Now playing";
+
         } catch (error) {
-            musicLabel.textContent = "Add your music file";
+            musicLabel.textContent = "Check your music file";
+            console.log("Music playback error:", error);
         }
+
     } else {
         music.pause();
+
         musicButton.textContent = "▶";
         musicLabel.textContent = "Play our song";
     }
@@ -53,10 +68,30 @@ musicButton.addEventListener("click", async () => {
 
 volumeButton.addEventListener("click", () => {
     music.muted = !music.muted;
+
     volumeButton.textContent = music.muted ? "🔇" : "🔊";
 });
 
+music.addEventListener("ended", () => {
+    musicButton.textContent = "▶";
+    musicLabel.textContent = "Play our song";
+});
+
+music.addEventListener("pause", () => {
+    if (!music.ended) {
+        musicButton.textContent = "▶";
+        musicLabel.textContent = "Play our song";
+    }
+});
+
+music.addEventListener("play", () => {
+    musicButton.textContent = "Ⅱ";
+    musicLabel.textContent = "Now playing";
+});
+
+// ===================================
 // PHOTO SLIDERS
+// ===================================
 
 const sliders = {
     outdoor: 0,
@@ -74,17 +109,23 @@ function updateSlider(type) {
 
     images.forEach((image, index) => {
         const dot = document.createElement("span");
-        dot.className = "dot" + (index === sliders[type] ? " active" : "");
+
+        dot.className = "dot" +
+            (index === sliders[type] ? " active" : "");
+
         dot.addEventListener("click", () => {
             sliders[type] = index;
             updateSlider(type);
         });
+
         dotsContainer.appendChild(dot);
     });
 }
 
 function moveSlide(type, direction) {
-    const images = document.querySelectorAll("#" + type + "Track img");
+    const images = document.querySelectorAll(
+        "#" + type + "Track img"
+    );
 
     sliders[type] += direction;
 
@@ -102,7 +143,9 @@ function moveSlide(type, direction) {
 updateSlider("outdoor");
 updateSlider("indoor");
 
+// ===================================
 // LIGHTBOX
+// ===================================
 
 let lightboxType = "outdoor";
 let lightboxIndex = 0;
@@ -110,23 +153,33 @@ let lightboxIndex = 0;
 document.querySelectorAll(".slider-track img").forEach(image => {
     image.addEventListener("click", () => {
         const track = image.parentElement;
+
         lightboxType = track.id.replace("Track", "");
+
         lightboxIndex = Array.from(track.children).indexOf(image);
+
         showLightbox();
     });
 });
 
 function showLightbox() {
-    const images = document.querySelectorAll("#" + lightboxType + "Track img");
+    const images = document.querySelectorAll(
+        "#" + lightboxType + "Track img"
+    );
 
-    document.getElementById("lightboxImage").src = images[lightboxIndex].src;
+    document.getElementById("lightboxImage").src =
+        images[lightboxIndex].src;
+
     document.getElementById("lightbox").classList.add("show");
 }
 
 function changeLightbox(direction) {
-    const images = document.querySelectorAll("#" + lightboxType + "Track img");
+    const images = document.querySelectorAll(
+        "#" + lightboxType + "Track img"
+    );
 
-    lightboxIndex = (lightboxIndex + direction + images.length) % images.length;
+    lightboxIndex =
+        (lightboxIndex + direction + images.length) % images.length;
 
     showLightbox();
 }
@@ -142,13 +195,18 @@ document.getElementById("lightbox").addEventListener("click", event => {
 });
 
 document.addEventListener("keydown", event => {
-    if (event.key === "Escape") closeLightbox();
+    if (event.key === "Escape") {
+        closeLightbox();
+    }
 });
 
+// ===================================
 // LOCATION
+// ===================================
 
 function getDirections() {
-    const url = "https://www.google.com/maps/search/?api=1&query=" +
+    const url =
+        "https://www.google.com/maps/search/?api=1&query=" +
         encodeURIComponent(wedding.mapQuery);
 
     window.open(url, "_blank");
@@ -157,13 +215,17 @@ function getDirections() {
 async function copyAddress() {
     try {
         await navigator.clipboard.writeText(wedding.venue);
+
         alert("Wedding address copied!");
+
     } catch (error) {
         alert("Please copy the address manually: " + wedding.venue);
     }
 }
 
+// ===================================
 // GOOGLE CALENDAR
+// ===================================
 
 function addGoogleCalendar() {
     const start = wedding.date.replaceAll("-", "") +
@@ -172,24 +234,34 @@ function addGoogleCalendar() {
     const end = wedding.date.replaceAll("-", "") +
         "T" + wedding.endTime.replace(":", "") + "00";
 
-    const url = new URL("https://calendar.google.com/calendar/render");
+    const url = new URL(
+        "https://calendar.google.com/calendar/render"
+    );
 
     url.searchParams.set("action", "TEMPLATE");
     url.searchParams.set("text", "Kalab & Merry Wedding");
     url.searchParams.set("dates", start + "/" + end);
     url.searchParams.set("location", wedding.venue);
-    url.searchParams.set("details", "Join us to celebrate Kalab & Merry!");
+    url.searchParams.set(
+        "details",
+        "Join us to celebrate Kalab & Merry!"
+    );
 
     window.open(url.toString(), "_blank");
 }
 
+// ===================================
 // APPLE / OTHER CALENDAR DOWNLOAD
+// ===================================
 
 function downloadCalendar() {
     const date = wedding.date.replaceAll("-", "");
 
-    const start = date + "T" + wedding.startTime.replace(":", "") + "00";
-    const end = date + "T" + wedding.endTime.replace(":", "") + "00";
+    const start = date +
+        "T" + wedding.startTime.replace(":", "") + "00";
+
+    const end = date +
+        "T" + wedding.endTime.replace(":", "") + "00";
 
     const calendar = [
         "BEGIN:VCALENDAR",
@@ -212,26 +284,35 @@ function downloadCalendar() {
     });
 
     const url = URL.createObjectURL(blob);
+
     const link = document.createElement("a");
 
     link.href = url;
     link.download = "Kalab-Merry-Wedding.ics";
+
     link.click();
 
     URL.revokeObjectURL(url);
 }
 
+// ===================================
 // RSVP FORM
+// ===================================
 
 document.getElementById("rsvpForm").addEventListener("submit", event => {
     event.preventDefault();
 
     const name = document.getElementById("guestName").value.trim();
-    const attendance = document.getElementById("attendance").value;
 
-    if (!name || !attendance) return;
+    const attendance =
+        document.getElementById("attendance").value;
 
-    const confirmation = document.getElementById("rsvpConfirmation");
+    if (!name || !attendance) {
+        return;
+    }
+
+    const confirmation =
+        document.getElementById("rsvpConfirmation");
 
     confirmation.textContent =
         "Thank you, " + name + "! Your response is ready. " +
@@ -240,13 +321,20 @@ document.getElementById("rsvpForm").addEventListener("submit", event => {
     event.target.reset();
 });
 
+// ===================================
 // FAVORITES
+// ===================================
 
 function toggleFavorite() {
     const button = document.getElementById("favoriteButton");
-    const saved = localStorage.getItem("kalabMerryFavorite") === "true";
 
-    localStorage.setItem("kalabMerryFavorite", String(!saved));
+    const saved =
+        localStorage.getItem("kalabMerryFavorite") === "true";
+
+    localStorage.setItem(
+        "kalabMerryFavorite",
+        String(!saved)
+    );
 
     button.textContent = saved
         ? "♡ ADD TO FAVORITES"
@@ -258,7 +346,9 @@ if (localStorage.getItem("kalabMerryFavorite") === "true") {
         "♥ ADDED TO FAVORITES";
 }
 
-// SHARE
+// ===================================
+// SHARE INVITATION
+// ===================================
 
 async function shareEvent() {
     const shareData = {
@@ -270,31 +360,41 @@ async function shareEvent() {
     if (navigator.share) {
         try {
             await navigator.share(shareData);
+
         } catch (error) {
             // Sharing was cancelled or unavailable.
         }
+
     } else {
         try {
             await navigator.clipboard.writeText(window.location.href);
+
             alert("Invitation link copied!");
+
         } catch (error) {
             alert("Copy the website address from your browser.");
         }
     }
 }
 
+// ===================================
+// WEDDING COUNTDOWN
+// ===================================
 
-// Wedding countdown
-const weddingDate = new Date("2026-12-25T10:00:00+03:00").getTime();
+const weddingDate =
+    new Date("2026-12-25T10:00:00+03:00").getTime();
 
 function updateCountdown() {
     const now = new Date().getTime();
+
     const distance = weddingDate - now;
 
     if (distance <= 0) {
         document.querySelector(".countdown-section").innerHTML =
             "<h2>Today is our special day! ❤️</h2>";
+
         clearInterval(countdownTimer);
+
         return;
     }
 
@@ -312,4 +412,5 @@ function updateCountdown() {
 }
 
 updateCountdown();
+
 const countdownTimer = setInterval(updateCountdown, 1000);
