@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#211713">
+
+    <title>Kalab & Merry | Wedding Invitation</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- OPENING SCREEN -->
+<section class="opening" id="opening">
+    <div class="luxury-frame">
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+
+        <p class="luxury-overline">THE WEDDING CELEBRATION OF</p>
+
+        <div class="luxury-monogram">
+            K<span>&</span>M
+        </div>
+
+        <div class="luxury-divider">
+            <span>✦</span>
+        </div>
+
+        <h1 class="luxury-names">
+            Kalab <i>&</i> Merry
+        </h1>
+
+        <p class="luxury-tagline">
+            A beautiful beginning to forever
+        </p>
+
+        <p class="luxury-invitation">
+            YOU ARE CORDIALLY INVITED
+        </p>
+
+        <button class="luxury-button" onclick="openInvitation()">
+            <span>OPEN INVITATION</span>
+            <span class="button-arrow">→</span>
+        </button>
+
+        <p class="luxury-footer">WITH LOVE & JOY</p>
+    </div>
+</section>
+
+<section class="countdown-section">
+    <p class="countdown-label">COUNTING DOWN TO FOREVER</p>
+    <h2>Our Special Day</h2>
+
+    <div class="countdown">
+        <div><span id="days">00</span><small>Days</small></div>
+        <div><span id="hours">00</span><small>Hours</small></div>
+        <div><span id="minutes">00</span><small>Minutes</small></div>
+        <div><span id="seconds">00</span><small>Seconds</small></div>
+    </div>
+</section>
+
+
+
+
+<!-- MUSIC -->
+<audio id="weddingMusic" loop>
+    <source src="music/wedding-song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-player">
+    <button id="musicButton" aria-label="Play music">▶</button>
+    <span id="musicLabel">Play our song</span>
+    <button id="volumeButton" aria-label="Toggle volume">🔊</button>
+</div>
+
+<!-- MAIN INVITATION -->
+<main id="invitation">
+
+    <!-- HERO -->
+    <section class="hero section">
+        <p class="small-gold">TOGETHER WITH THEIR FAMILIES</p>
+
+        <p class="script-text">We are getting married</p>
+
+        <h1>Kalab <span>&</span> Merry</h1>
+
+        <div class="gold-line"></div>
+
+        <h2>OUR WEDDING DAY</h2>
+
+        <p class="event-date">DECEMBER 25, 2026</p>
+        <p class="event-time">10:00 AM</p>
+
+        <p class="venue">ADDIS ABABA, ETHIOPIA</p>
+
+        <p class="amharic">
+            በደስታ እንጋብዛችኋለን!
+        </p>
+
+        <a href="#gallery" class="gold-button">EXPLORE OUR STORY</a>
+    </section>
+
+    <!-- COUPLE PHOTO -->
+    <section class="couple-section section">
+        <p class="small-gold">THE COUPLE</p>
+        <h2>Two Hearts, One Journey</h2>
+
+        <img class="main-couple-photo"
+             src="images/ABEYE.jpg"
+             alt="Kalab and Merry">
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery-section section" id="gallery">
+        <p class="small-gold">OUR MEMORIES</p>
+        <h2>Beautiful Moments</h2>
+        <p class="section-description">
+            Every picture tells a part of our story.
+        </p>
+
+        <h3 class="gallery-heading">OUTDOOR PHOTOSHOOT</h3>
+
+        <div class="slider">
+            <button class="slider-arrow" onclick="moveSlide('outdoor', -1)">❮</button>
+
+            <div class="slider-window">
+                <div class="slider-track" id="outdoorTrack">
+                    <img src="images/outdoor1.jpg" alt="Outdoor photo 1">
+                    <img src="images/outdoor2.jpg" alt="Outdoor photo 2">
+                    <img src="images/outdoor3.jpg" alt="Outdoor photo 3">
+                    <img src="images/outdoor4.jpg" alt="Outdoor photo 4">
+                    <img src="images/outdoor5.jpg" alt="Outdoor photo 5">
+                </div>
+            </div>
+
+            <button class="slider-arrow" onclick="moveSlide('outdoor', 1)">❯</button>
+        </div>
+
+        <div class="dots" id="outdoorDots"></div>
+
+        <h3 class="gallery-heading">INDOOR PHOTOSHOOT</h3>
+
+        <div class="slider">
+            <button class="slider-arrow" onclick="moveSlide('indoor', -1)">❮</button>
+
+            <div class="slider-window">
+                <div class="slider-track" id="indoorTrack">
+                    <img src="images/indoor1.jpg" alt="Indoor photo 1">
+                    <img src="images/indoor2.jpg" alt="Indoor photo 2">
+                    <img src="images/indoor3.jpg" alt="Indoor photo 3">
+                    <img src="images/indoor4.jpg" alt="Indoor photo 4">
+                    <img src="images/indoor5.jpg" alt="Indoor photo 5">
+                </div>
+            </div>
+
+            <button class="slider-arrow" onclick="moveSlide('indoor', 1)">❯</button>
+        </div>
+
+        <div class="dots" id="indoorDots"></div>
+    </section>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">×</button>
+        <button class="lightbox-arrow" onclick="changeLightbox(-1)">❮</button>
+        <img id="lightboxImage" src="" alt="Gallery preview">
+        <button class="lightbox-arrow" onclick="changeLightbox(1)">❯</button>
+    </div>
+
+    <!-- LOCATION -->
+    <section class="location-section section" id="location">
+        <p class="small-gold">JOIN US</p>
+        <h2>Wedding Location</h2>
+
+        <div class="location-card">
+            <h3>THE WEDDING VENUE</h3>
+            <p id="venueAddress">Add your exact wedding venue and address here, Addis Ababa, Ethiopia</p>
+
+            <div class="map-placeholder">
+                <span>📍</span>
+                <p>Our wedding location</p>
+                <small>Add your real map location in script.js</small>
+            </div>
+
+            <div class="location-buttons">
+                <button class="gold-button" onclick="getDirections()">GET DIRECTIONS</button>
+                <button class="outline-button" onclick="copyAddress()">COPY ADDRESS</button>
+            </div>
+
+            <div class="calendar-buttons">
+                <button class="outline-button" onclick="addGoogleCalendar()">
+                    GOOGLE CALENDAR
+                </button>
+                <button class="outline-button" onclick="downloadCalendar()">
+                    APPLE / OTHER CALENDAR
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="timeline-section section">
+        <p class="small-gold">SAVE THE MOMENT</p>
+        <h2>Wedding Day Schedule</h2>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <span>10:00 AM</span>
+                <h3>Guest Arrival</h3>
+                <p>Welcome and meet our families.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span>11:00 AM</span>
+                <h3>Wedding Ceremony</h3>
+                <p>Celebrate our special union.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span>01:00 PM</span>
+                <h3>Photography</h3>
+                <p>Capture beautiful memories together.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span>02:00 PM</span>
+                <h3>Reception</h3>
+                <p>Food, music and celebration.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP -->
+    <section class="rsvp-section section" id="rsvp">
+        <p class="small-gold">WE WOULD LOVE TO SEE YOU</p>
+        <h2>Kindly RSVP</h2>
+
+        <form id="rsvpForm">
+            <label for="guestName">Full Name</label>
+            <input type="text" id="guestName" placeholder="Your full name" required>
+
+            <label for="guestEmail">Email Address</label>
+            <input type="email" id="guestEmail" placeholder="Your email address" required>
+
+            <label for="attendance">Will you attend?</label>
+            <select id="attendance" required>
+                <option value="">Select your answer</option>
+                <option value="Attending">Yes, I will attend</option>
+                <option value="Declining">Sorry, I cannot attend</option>
+            </select>
+
+            <label for="meal">Meal Preference</label>
+            <select id="meal">
+                <option value="">Select meal preference</option>
+                <option value="Regular">Regular</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Other">Other / Please contact me</option>
+            </select>
+
+            <label for="message">Optional Message</label>
+            <textarea id="message" rows="4"
+                placeholder="Write a message for the couple..."></textarea>
+
+            <button type="submit" class="gold-button">
+                SUBMIT RSVP
+            </button>
+        </form>
+
+        <p id="rsvpConfirmation" class="confirmation" aria-live="polite"></p>
+    </section>
+
+    <!-- SHARE -->
+    <section class="share-section section">
+        <p class="small-gold">SHARE THE JOY</p>
+        <h2>Celebrate With Us</h2>
+
+        <button class="gold-button" id="favoriteButton" onclick="toggleFavorite()">
+            ♡ ADD TO FAVORITES
+        </button>
+
+        <button class="outline-button" onclick="shareEvent()">
+            SHARE INVITATION
+        </button>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <h2>Kalab <span>&</span> Merry</h2>
+        <p>Made with love, for a lifetime of memories.</p>
+        <p class="small-gold">DECEMBER 25, 2026</p>
+    </footer>
+
+</main>
+
+<script src="script.js"></script>
+
+
+<section class="final-thankyou">
+    <div class="thankyou-frame">
+
+        <p class="thankyou-overline">A DAY TO REMEMBER</p>
+
+        <div class="thankyou-symbol">K <span>&</span> M</div>
+
+        <div class="thankyou-line"></div>
+
+        <h2>Thank You</h2>
+
+        <p class="thankyou-message">
+            Your presence, love and blessings
+            mean the world to us.
+        </p>
+
+        <p class="thankyou-names">Kalab & Merry</p>
+
+        <p class="thankyou-footer">
+            WITH LOVE, ALWAYS
+        </p>
+
+        <button onclick="window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        })">
+            BACK TO TOP ↑
+        </button>
+
+    </div>
+</section>
+</body>
+</html>
