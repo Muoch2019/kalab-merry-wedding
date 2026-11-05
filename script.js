@@ -16,6 +16,16 @@ const wedding = {
 
 function openInvitation() {
     document.getElementById("opening").classList.add("hide");
+
+    music.play()
+        .then(() => {
+            musicButton.textContent = "Ⅱ";
+            musicLabel.textContent = "Now playing";
+        })
+        .catch((error) => {
+            musicLabel.textContent = "Tap to play our song";
+            console.log("Music playback:", error);
+        });
 }
 
 // MUSIC PLAYER
