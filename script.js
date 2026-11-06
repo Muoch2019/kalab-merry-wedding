@@ -70,14 +70,14 @@ function updateSlider(type) {
 
     if (!track || !dotsContainer) return;
 
-    const IMAGES = track.querySelectorAll("img");
-    if (!IMAGES.length) return;
+    const images = track.querySelectorAll("img");
+    if (!images.length) return;
 
-    sliders[type] = Math.min(sliders[type], IMAGES.length - 1);
+    sliders[type] = Math.min(sliders[type], images.length - 1);
     track.style.transform = `translateX(-${sliders[type] * 100}%)`;
     dotsContainer.innerHTML = "";
 
-    IMAGES.forEach((image, index) => {
+    images.forEach((image, index) => {
         const dot = document.createElement("button");
         dot.type = "button";
         dot.className = "dot" +
@@ -101,11 +101,11 @@ function moveSlide(type, direction) {
     const track = document.getElementById(type + "Track");
     if (!track) return;
 
-    const IMAGES = track.querySelectorAll("img");
-    if (!IMAGES.length) return;
+    const images = track.querySelectorAll("img");
+    if (!images.length) return;
 
     sliders[type] =
-        (sliders[type] + direction + IMAGES.length) % IMAGES.length;
+        (sliders[type] + direction + images.length) % images.length;
 
     updateSlider(type);
 }
@@ -129,28 +129,28 @@ document.querySelectorAll(".slider-track img").forEach((image) => {
 });
 
 function showLightbox() {
-    const IMAGES = document.querySelectorAll(
+    const images = document.querySelectorAll(
         "#" + lightboxType + "Track img"
     );
 
-    if (!IMAGES.length) return;
+    if (!images.length) return;
 
     document.getElementById("lightboxImage").src =
-        IMAGES[lightboxIndex].src;
+        images[lightboxIndex].src;
 
     document.getElementById("lightbox").classList.add("show");
     document.body.classList.add("lightbox-open");
 }
 
 function changeLightbox(direction) {
-    const IMAGES = document.querySelectorAll(
+    const images = document.querySelectorAll(
         "#" + lightboxType + "Track img"
     );
 
-    if (!IMAGES.length) return;
+    if (!images.length) return;
 
     lightboxIndex =
-        (lightboxIndex + direction + IMAGES.length) % IMAGES.length;
+        (lightboxIndex + direction + images.length) % images.length;
 
     showLightbox();
 }
