@@ -349,6 +349,5 @@ function updateCountdown() {
     document.getElementById("seconds").textContent =
         Math.floor((distance / 1000) % 60);
 }
-
 updateCountdown();
 countdownTimer = setInterval(updateCountdown, 1000);
