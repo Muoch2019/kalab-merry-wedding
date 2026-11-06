@@ -31,7 +31,6 @@ function openInvitation() {
             musicLabel.textContent = "Tap to play our song";
         });
 }
-
 // MUSIC PLAYER
 musicButton.addEventListener("click", async () => {
     if (music.paused) {
@@ -265,7 +264,6 @@ function downloadCalendar() {
 
     URL.revokeObjectURL(url);
 }
-
 // FAVORITES
 function toggleFavorite() {
     const button = document.getElementById("favoriteButton");
