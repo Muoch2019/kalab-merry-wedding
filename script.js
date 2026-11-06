@@ -9,7 +9,7 @@ const wedding = {
     startTime: "10:00",
     endTime: "18:00",
     venue: "Addis Ababa, Ethiopia",
-    mapLink: "https://maps.app.goo.gl/63BLgmmkiew6v3W16"
+    mapLink: "https://maps.app.goo.gl/z5pSEt46QXArxjSaA?g_st=i&utm_campaign=ac-im"
 };
 
 // MUSIC ELEMENTS
