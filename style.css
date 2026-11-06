@@ -518,12 +518,12 @@ h2 {
 
 /* SHARE */
 .share-section { background: var(--dark); }
-
 /* FOOTERS */
  .main-footer {
     padding: 60px 20px;
     text-align: center;
     background: var(--dark-deep);
+    text: transform 0; 20px ;
 }
 
 .main-footer h2 {
