@@ -711,3 +711,8 @@ h2 {
     .luxury-button { margin-top: 15px; }
     .luxury-footer { bottom: 12px; }
 }
+.phone-color {
+ color: hsl(0, 0%, 100%);
+
+
+}
